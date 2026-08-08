@@ -11,6 +11,37 @@
    ========================================================= */
 
 /* ---------------------------------------------------------
+   0. PRELOADER
+   Hides once the page (images, fonts, etc.) has fully loaded,
+   with a small minimum display time so it doesn't just flash
+   on fast connections.
+--------------------------------------------------------- */
+const pageLoadStart = performance.now();
+
+function initPreloader() {
+  const preloader = document.getElementById("preloader");
+  if (!preloader) return;
+  const MIN_DISPLAY_MS = 550;
+
+  function hidePreloader() {
+    const elapsed = performance.now() - pageLoadStart;
+    const remaining = Math.max(MIN_DISPLAY_MS - elapsed, 0);
+    setTimeout(() => {
+      preloader.classList.add("is-hidden");
+      document.body.classList.remove("is-loading");
+      setTimeout(() => preloader.remove(), 600);
+    }, remaining);
+  }
+
+  if (document.readyState === "complete") {
+    hidePreloader();
+  } else {
+    window.addEventListener("load", hidePreloader, { once: true });
+  }
+}
+initPreloader();
+
+/* ---------------------------------------------------------
    1. CENTRALIZED CONTENT DATA
    Replace every placeholder value below with the client's
    real information. Nothing elsewhere in the file needs to
@@ -297,6 +328,56 @@ function initScrollReveal() {
 }
 
 /* ---------------------------------------------------------
+   4b. STATS COUNT-UP
+   Reads each .stat-number's existing text (e.g. "50+", "4.8/5"),
+   animates the leading number from 0 up to that value, and
+   re-appends whatever suffix followed it ("+", "/7", "/5"...).
+   Runs once per element, the first time it scrolls into view.
+--------------------------------------------------------- */
+function initStatsCounter() {
+  const numbers = document.querySelectorAll(".stat-number");
+  if (!numbers.length) return;
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function animateCount(el) {
+    const raw = el.textContent.trim();
+    const match = raw.match(/^(\d+(\.\d+)?)/);
+    if (!match || reduceMotion) return; // leave static text as-is
+
+    const target = parseFloat(match[1]);
+    const decimals = match[1].includes(".") ? match[1].split(".")[1].length : 0;
+    const suffix = raw.slice(match[1].length);
+    const duration = 1100;
+    const start = performance.now();
+
+    function tick(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      const value = (target * eased).toFixed(decimals);
+      el.textContent = `${value}${suffix}`;
+      if (progress < 1) requestAnimationFrame(tick);
+      else el.textContent = raw; // snap to exact original text at the end
+    }
+    requestAnimationFrame(tick);
+  }
+
+  if (!("IntersectionObserver" in window)) {
+    numbers.forEach(animateCount);
+    return;
+  }
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCount(entry.target);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.6 });
+  numbers.forEach(el => observer.observe(el));
+}
+
+/* ---------------------------------------------------------
    5. GALLERY FILTERING + LIGHTBOX
 --------------------------------------------------------- */
 function initGallery() {
@@ -344,12 +425,20 @@ function initGallery() {
   function openLightbox(index) {
     activeIndex = index;
     const data = pgData.gallery[index];
-    lightboxImage.src = data.img;
-    lightboxImage.alt = data.caption;
-    lightboxCaption.textContent = data.caption;
     lastFocused = document.activeElement;
     lightbox.hidden = false;
     document.body.style.overflow = "hidden";
+
+    // Crossfade: fade the current image out, swap the source once it's
+    // invisible, then fade the new one in.
+    lightboxImage.classList.add("is-fading");
+    setTimeout(() => {
+      lightboxImage.src = data.img;
+      lightboxImage.alt = data.caption;
+      lightboxCaption.textContent = data.caption;
+      lightboxImage.classList.remove("is-fading");
+    }, 160);
+
     closeBtn.focus();
   }
 
@@ -432,6 +521,15 @@ function initForm() {
     const row = input.closest(".form-row");
     if (errorEl) errorEl.textContent = message;
     if (row) row.classList.toggle("has-error", Boolean(message));
+
+    if (message) {
+      // Restart the shake animation even if it's already mid-shake
+      row.classList.remove("shake");
+      // eslint-disable-next-line no-unused-expressions
+      row.offsetWidth; // force reflow so the animation can retrigger
+      row.classList.add("shake");
+      row.addEventListener("animationend", () => row.classList.remove("shake"), { once: true });
+    }
   }
 
   function validateField(fieldName) {
@@ -512,6 +610,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initNavbar();
   initScrollReveal();
+  initStatsCounter();
   initGallery();
   initAccordion();
   initForm();
