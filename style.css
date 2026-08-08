@@ -263,7 +263,11 @@ section { padding: 88px 0; }
 .nav-scrim.is-active { opacity: 1; pointer-events: auto; }
 
 /* ---------- 6. HERO ---------- */
-.hero { padding-top: 76px; padding-bottom: 64px; }
+/* .navbar is position:sticky, so it already reserves its own height (var(--nav-h))
+   in normal flow. No extra top padding is needed here — adding one on top of the
+   navbar's own height was creating a visible empty gap under the nav, especially
+   on mobile. */
+.hero { padding-top: 40px; padding-bottom: 64px; }
 .hero-grid {
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
@@ -738,9 +742,61 @@ section { padding: 88px 0; }
 .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; transition-delay: var(--reveal-delay, 0ms); }
 .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
+/* Hero load-in sequence */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(26px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-copy { animation: fadeUp 0.8s ease both; }
+.hero-media { animation: fadeUp 0.9s ease 0.15s both; }
+.hero .eyebrow { animation: fadeUp 0.6s ease 0.05s both; }
+
+/* Gentle ambient float for the rating card */
+@keyframes floatCard {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.floating-card { animation: floatCard 4.5s ease-in-out infinite; animation-delay: 1s; }
+
+/* Soft pulse to draw the eye to the header CTA */
+@keyframes ctaPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(217,140,61,0.45); }
+  50% { box-shadow: 0 0 0 8px rgba(217,140,61,0); }
+}
+.nav-cta { animation: ctaPulse 2.8s ease-in-out infinite; }
+.nav-cta:hover { animation: none; }
+
+/* Mobile menu links slide in one after another as the panel opens */
+.nav-links a {
+  opacity: 0;
+  transform: translateX(16px);
+}
+.nav-links.is-open a {
+  animation: slideInLink 0.45s ease forwards;
+}
+.nav-links.is-open a:nth-child(1) { animation-delay: 0.05s; }
+.nav-links.is-open a:nth-child(2) { animation-delay: 0.10s; }
+.nav-links.is-open a:nth-child(3) { animation-delay: 0.15s; }
+.nav-links.is-open a:nth-child(4) { animation-delay: 0.20s; }
+.nav-links.is-open a:nth-child(5) { animation-delay: 0.25s; }
+.nav-links.is-open a:nth-child(6) { animation-delay: 0.30s; }
+.nav-links.is-open a:nth-child(7) { animation-delay: 0.35s; }
+.nav-links.is-open a:nth-child(8) { animation-delay: 0.40s; }
+@keyframes slideInLink {
+  to { opacity: 1; transform: translateX(0); }
+}
+@media (min-width: 861px) {
+  .nav-links a { opacity: 1; transform: none; }
+}
+
+/* Card entrance stagger — class + inline delay are applied by script.js */
+.card-reveal { opacity: 0; transform: translateY(18px) scale(0.98); transition: opacity 0.5s ease, transform 0.5s ease; transition-delay: var(--reveal-delay, 0ms); }
+.card-reveal.is-visible { opacity: 1; transform: translateY(0) scale(1); }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .reveal { opacity: 1; transform: none; transition: none; }
+  .reveal, .card-reveal { opacity: 1; transform: none; transition: none; }
+  .nav-links a { opacity: 1; transform: none; }
   * { animation: none !important; transition-duration: 0.01ms !important; }
 }
 
@@ -765,7 +821,7 @@ section { padding: 88px 0; }
     position: fixed;
     top: var(--nav-h); right: 0;
     width: min(320px, 84vw);
-    height: calc(100vh - var(--nav-h));
+    height: calc(60vh - var(--nav-h));
     background: var(--surface);
     flex-direction: column;
     align-items: flex-start;
