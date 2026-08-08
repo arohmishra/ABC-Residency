@@ -24,7 +24,20 @@
 
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="is-loading">
+
+<!-- Preloader: shown while the page's fonts/images finish loading -->
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="preloader-mark">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 11.5L12 4l9 7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M5.5 10v9a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M10 20v-5.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1V20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <p class="preloader-text">ABC Residency PG</p>
+  <div class="preloader-bar" aria-hidden="true"></div>
+</div>
 
 <a class="skip-link" href="#main">Skip to main content</a>
 
@@ -378,7 +391,7 @@
             <p class="form-error" id="err-roomType" role="alert"></p>
           </div>
 
-           <!-- move in date is at this time not used if required we will use it -->
+          <!-- move in date is at this time not used if required we will use it -->
           <!-- <div class="form-row">
             <label for="moveInDate">Move‑in Date</label>
             <input type="date" id="moveInDate" name="moveInDate" aria-describedby="err-moveInDate">
