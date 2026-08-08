@@ -121,8 +121,8 @@ const pgData = {
 function renderRooms() {
   const grid = document.getElementById("roomGrid");
   if (!grid) return;
-  grid.innerHTML = pgData.rooms.map(room => `
-    <article class="room-card${room.popular ? " is-popular" : ""}">
+  grid.innerHTML = pgData.rooms.map((room, i) => `
+    <article class="room-card card-reveal${room.popular ? " is-popular" : ""}" style="--reveal-delay:${i * 100}ms">
       <div class="room-media">
         <img src="${room.image}" alt="Placeholder image of a ${room.name.toLowerCase()} room at ABC Residency PG" loading="lazy" width="500" height="375">
         ${room.popular ? `<span class="badge badge-accent room-badge">Most Popular</span>` : ""}
@@ -143,8 +143,8 @@ function renderRooms() {
 function renderAmenities() {
   const grid = document.getElementById("amenitiesGrid");
   if (!grid) return;
-  grid.innerHTML = pgData.amenities.map(a => `
-    <div class="amenity-card">
+  grid.innerHTML = pgData.amenities.map((a, i) => `
+    <div class="amenity-card card-reveal" style="--reveal-delay:${(i % 5) * 70}ms">
       <span class="amenity-icon" aria-hidden="true">${a.icon}</span>
       <h3>${a.name}</h3>
       <p>${a.desc}</p>
@@ -158,7 +158,7 @@ function renderGallery() {
   const grid = document.getElementById("galleryGrid");
   if (!grid) return;
   grid.innerHTML = pgData.gallery.map((item, i) => `
-    <figure class="gallery-item" data-category="${item.category}" data-index="${i}">
+    <figure class="gallery-item card-reveal" data-category="${item.category}" data-index="${i}" style="--reveal-delay:${(i % 4) * 70}ms">
       <img src="${item.img}" alt="${item.caption}" loading="lazy" width="400" height="400">
       <div class="gallery-item-overlay"><span>${item.caption}</span></div>
       <button type="button" aria-label="View larger image: ${item.caption}" data-lightbox-open="${i}"></button>
@@ -169,8 +169,8 @@ function renderGallery() {
 function renderTestimonials() {
   const grid = document.getElementById("testimonialGrid");
   if (!grid) return;
-  grid.innerHTML = pgData.testimonials.map(t => `
-    <article class="testimonial-card">
+  grid.innerHTML = pgData.testimonials.map((t, i) => `
+    <article class="testimonial-card card-reveal" style="--reveal-delay:${i * 100}ms">
       <span class="testimonial-note">Placeholder testimonial</span>
       <span class="testimonial-stars" aria-hidden="true">${"⭐".repeat(Math.round(parseFloat(t.rating)))} ${t.rating}</span>
       <p class="testimonial-quote">&ldquo;${t.quote}&rdquo;</p>
@@ -280,7 +280,7 @@ function initNavbar() {
    4. SCROLL REVEAL
 --------------------------------------------------------- */
 function initScrollReveal() {
-  const items = document.querySelectorAll(".reveal");
+  const items = document.querySelectorAll(".reveal, .card-reveal");
   if (!("IntersectionObserver" in window)) {
     items.forEach(el => el.classList.add("is-visible"));
     return;
