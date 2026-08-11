@@ -280,7 +280,15 @@ section { padding: 88px 0; }
 .hero-title { margin-bottom: 0.4em; }
 .hero-sub { font-size: 1.12rem; max-width: 46ch; margin-bottom: 2em; }
 
-.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 34px; }
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 22px; }
+
+.hero-quick-contact { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-bottom: 24px; }
+.quick-contact-link {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-weight: 700; font-size: 0.92rem; color: var(--primary);
+  padding: 4px 0;
+}
+.quick-contact-link:hover { color: var(--accent-dark); }
 
 .trust-list { display: flex; flex-wrap: wrap; gap: 12px 22px; }
 .trust-list li {
@@ -408,6 +416,18 @@ section { padding: 88px 0; }
 .room-features li { display: flex; align-items: center; gap: 9px; font-size: 0.92rem; color: var(--text-primary); }
 .room-features li::before { content: "✓"; color: var(--accent-dark); font-weight: 800; }
 .room-card .btn { margin-top: auto; }
+.room-form-link {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  padding: 2px 0;
+  align-self: center;
+}
+.room-form-link:hover { color: var(--primary); }
 
 /* ---------- 10. AMENITIES ---------- */
 .amenities-grid {
@@ -535,6 +555,14 @@ section { padding: 88px 0; }
 .nearby-list li span { font-weight: 600; color: var(--primary); }
 .nearby-list li em { font-style: normal; color: var(--accent-dark); font-weight: 700; font-size: 0.88rem; }
 
+.map-embed-wrap {
+  aspect-ratio: 4/3.4;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+.map-embed-wrap iframe { width: 100%; height: 100%; display: block; }
+
 .map-placeholder {
   position: relative;
   aspect-ratio: 4/3.4;
@@ -589,10 +617,6 @@ section { padding: 88px 0; }
 }
 .author-name { font-weight: 700; color: var(--primary); font-size: 0.92rem; }
 .author-role { font-size: 0.8rem; color: var(--text-secondary); }
-.testimonial-note {
-  font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em;
-  color: var(--text-secondary); font-weight: 700;
-}
 
 /* ---------- 15. FAQ ---------- */
 .faq { background: var(--surface); }
@@ -621,6 +645,25 @@ section { padding: 88px 0; }
 }
 .accordion-panel-inner { padding: 0 4px 22px; }
 .accordion-panel-inner p { margin: 0; }
+
+/* ---------- 15b. RULES & POLICIES ---------- */
+.rules { background: var(--surface); }
+.rules-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+.rule-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 18px 20px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+.rule-label { font-weight: 700; color: var(--primary); font-size: 0.92rem; }
+.rule-detail { color: var(--text-secondary); font-size: 0.88rem; }
 
 /* ---------- 16. CONTACT / ENQUIRY ---------- */
 .contact-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 48px; align-items: start; }
@@ -671,6 +714,12 @@ section { padding: 88px 0; }
 }
 .form-row { margin-bottom: 18px; display: flex; flex-direction: column; gap: 6px; }
 .form-row label { font-weight: 700; font-size: 0.88rem; color: var(--primary); }
+.optional-tag { font-weight: 500; color: var(--text-secondary); text-transform: none; letter-spacing: 0; }
+
+/* Honeypot: kept in the tab/DOM flow so bots that auto-fill every visible
+   input still trip it, but hidden from sighted users and screen readers. */
+.honeypot-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
 .form-row input, .form-row select, .form-row textarea {
   padding: 13px 14px;
   border: 1.5px solid var(--border);
@@ -694,11 +743,20 @@ section { padding: 88px 0; }
   40%, 60% { transform: translateX(4px); }
 }
 .form-error { color: var(--danger); font-size: 0.8rem; margin: 0; min-height: 1em; }
+.form-privacy-note { font-size: 0.78rem; color: var(--text-secondary); margin: 14px 0 0; text-align: center; }
+.form-privacy-note a { color: var(--primary); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
 .form-success {
   margin-top: 16px; padding: 14px 16px;
   background: rgba(47,122,79,0.1); color: var(--success);
   border: 1px solid rgba(47,122,79,0.3); border-radius: var(--radius-sm);
   font-weight: 600; font-size: 0.92rem; text-align: center;
+  animation: fadeUp 0.4s ease both;
+}
+.form-fallback-notice {
+  margin-top: 16px; padding: 14px 16px;
+  background: rgba(217,140,61,0.1); color: var(--accent-dark);
+  border: 1px solid rgba(217,140,61,0.3); border-radius: var(--radius-sm);
+  font-weight: 600; font-size: 0.88rem; text-align: center;
   animation: fadeUp 0.4s ease both;
 }
 
@@ -728,6 +786,10 @@ section { padding: 88px 0; }
   padding-bottom: 48px;
   border-bottom: 1px solid rgba(255,255,255,0.1);
 }
+/* Applied by script.js when no social links are configured, so the "Follow
+   Us" column's hidden slot doesn't leave a blank gutter in the grid. */
+.footer-grid.footer-grid--no-social { grid-template-columns: 1.4fr 1fr 1fr; }
+
 .footer .brand-text { color: #fff; }
 .footer .brand-mark { background: rgba(255,255,255,0.12); color: var(--accent-light); }
 .footer-brand p { margin-top: 14px; font-size: 0.9rem; max-width: 32ch; }
@@ -737,8 +799,23 @@ section { padding: 88px 0; }
 .footer-col a:hover { color: var(--accent-light); }
 .footer-col li { font-size: 0.92rem; }
 .footer-bottom { text-align: center; padding: 24px 0; font-size: 0.82rem; }
+.footer-bottom a { text-decoration: underline; text-underline-offset: 2px; color: rgba(255,255,255,0.72); }
+.footer-bottom a:hover { color: var(--accent-light); }
 
-/* ---------- 19. BACK TO TOP ---------- */
+/* ---------- 18b. PRIVACY NOTICE ---------- */
+.privacy-section { padding: 0; background: var(--surface); }
+.privacy-details { max-width: 780px; margin: 0 auto; padding: 20px 24px; border-top: 1px solid var(--border); }
+.privacy-details summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 0.92rem;
+  padding: 8px 0;
+}
+.privacy-body { padding: 8px 0 20px; }
+.privacy-body p { font-size: 0.88rem; margin-bottom: 0.8em; }
+
+/* ---------- 19. BACK TO TOP / FLOATING WHATSAPP ---------- */
 .back-to-top {
   position: fixed; right: 22px; bottom: 22px; z-index: 300;
   width: 48px; height: 48px; border-radius: 50%;
@@ -748,6 +825,23 @@ section { padding: 88px 0; }
 }
 .back-to-top:hover { background: var(--accent); }
 .back-to-top[hidden] { display: none; }
+
+/* WhatsApp green is a deliberate, deviation from the site's navy/amber
+   palette — this single icon needs to read instantly as "WhatsApp" to
+   visitors, which matters more here than palette consistency. */
+.floating-whatsapp {
+  position: fixed; left: 22px; bottom: 22px; z-index: 300;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: #25D366; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: var(--shadow-md);
+  opacity: 0; transform: translateY(12px) scale(0.9);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease, background 0.2s ease;
+}
+.floating-whatsapp.is-visible { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+.floating-whatsapp:hover { background: #1EBE5A; }
 
 /* ---------- 20. ANIMATIONS ---------- */
 .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; transition-delay: var(--reveal-delay, 0ms); }
@@ -911,6 +1005,7 @@ section { padding: 88px 0; }
   .amenities-grid { grid-template-columns: repeat(2, 1fr); }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
   .room-grid, .why-grid, .testimonial-grid, .feature-highlights { grid-template-columns: 1fr; }
+  .rules-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
   .lightbox { padding: 20px; }
   .lightbox-prev { left: 8px; } .lightbox-next { right: 8px; }
