@@ -63,10 +63,10 @@ const propertyData = {
   // phoneHref / whatsappHref must be plain digits with country code (e.g. 91XXXXXXXXXX)
   // for the tel: and wa.me links to actually work. Leave the bracketed
   // placeholder in place until the real number is confirmed.
-  phone: "[Phone Number]",
-  phoneHref: "[PhoneNumber]",
-  whatsapp: "[WhatsApp Number]",
-  whatsappHref: "[WhatsAppNumber]",
+  // phone: "[Phone Number]",
+  // phoneHref: "[PhoneNumber]",
+  whatsapp: "917481892191",
+  whatsappHref: "917481892191",
   email: "[email address]",
 
   // --- Map ---
