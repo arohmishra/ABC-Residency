@@ -65,8 +65,8 @@ const propertyData = {
   // placeholder in place until the real number is confirmed.
   phone: "[Phone Number]",
   phoneHref: "[PhoneNumber]",
-  whatsapp: "[WhatsApp Number]",
-  whatsappHref: "[WhatsAppNumber]",
+  whatsapp: "[+91 7481892191 ]",
+  whatsappHref: "[917481892191]",
   email: "[email address]",
 
   // --- Map ---
