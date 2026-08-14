@@ -63,10 +63,10 @@ const propertyData = {
   // phoneHref / whatsappHref must be plain digits with country code (e.g. 91XXXXXXXXXX)
   // for the tel: and wa.me links to actually work. Leave the bracketed
   // placeholder in place until the real number is confirmed.
-  // phone: "[Phone Number]",
-  // phoneHref: "[PhoneNumber]",
-  whatsapp: "917481892191",
-  whatsappHref: "917481892191",
+  phone: "[Phone Number]",
+  phoneHref: "[PhoneNumber]",
+  whatsapp: "[WhatsApp Number]",
+  whatsappHref: "[WhatsAppNumber]",
   email: "[email address]",
 
   // --- Map ---
@@ -856,3 +856,80 @@ document.addEventListener("DOMContentLoaded", () => {
   initBackToTop();
   initFloatingWhatsApp();
 });
+
+/* Light particle field for the hero theme */
+(function initHeroParticles() {
+  const canvas = document.getElementById('heroParticles');
+  if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  let width = 0;
+  let height = 0;
+  let raf;
+
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    width = rect.width;
+    height = rect.height;
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const count = Math.min(90, Math.max(35, Math.floor((width * height) / 15000)));
+    particles = Array.from({ length: count }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.18,
+      vy: (Math.random() - 0.5) * 0.18,
+      r: Math.random() * 1.6 + 0.5,
+      alpha: Math.random() * 0.28 + 0.08
+    }));
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, width, height);
+
+    for (const p of particles) {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < -10) p.x = width + 10;
+      if (p.x > width + 10) p.x = -10;
+      if (p.y < -10) p.y = height + 10;
+      if (p.y > height + 10) p.y = -10;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(122, 106, 177, ${p.alpha})`;
+      ctx.fill();
+    }
+
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const a = particles[i];
+        const b = particles[j];
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < 105) {
+          const opacity = (1 - distance / 105) * 0.055;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = `rgba(122, 106, 177, ${opacity})`;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+    }
+
+    raf = requestAnimationFrame(draw);
+  }
+
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+  draw();
+
+  window.addEventListener('pagehide', () => cancelAnimationFrame(raf), { once: true });
+})();
