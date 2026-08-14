@@ -87,46 +87,39 @@
 <main id="main">
 
   <!-- ============ HERO ============ -->
-  <section class="hero" id="home">
-    <div class="container hero-grid">
+  <section class="hero theme-hero" id="home">
+    <canvas class="hero-particles" id="heroParticles" aria-hidden="true"></canvas>
+    <div class="hero-orb hero-orb-one" aria-hidden="true"></div>
+    <div class="hero-orb hero-orb-two" aria-hidden="true"></div>
+
+    <div class="container hero-theme-content">
       <div class="hero-copy reveal">
-        <p class="eyebrow"><span class="tag-dot"></span>Premium PG Accommodation</p>
-        <h1 class="hero-title">Your Comfortable Home Away From Home</h1>
-        <p class="hero-sub">Comfortable, secure and affordable accommodation for students and working professionals in <strong>[Locality], [City Name]</strong>.</p>
+        <h1 class="hero-title">A Better Place<br><span>To Live &amp; Belong.</span></h1>
+        <p class="hero-sub">Comfortable rooms, thoughtful amenities and a welcoming place to call home for students and working professionals in <strong>[Locality], [City Name]</strong>.</p>
 
         <div class="hero-actions">
-          <a href="#rooms" class="btn btn-primary">Explore Rooms</a>
-          <a href="#contact" class="btn btn-outline">Enquire Now</a>
+          <a href="#rooms" class="btn btn-primary">Explore Rooms <span aria-hidden="true">→</span></a>
+          <a href="#contact" class="btn btn-outline">Book a Visit</a>
         </div>
 
         <div class="hero-quick-contact" aria-label="Quick contact options">
           <a href="#" class="quick-contact-link" data-whatsapp-link data-whatsapp-message="">
-            <span aria-hidden="true">💬</span> WhatsApp Us
+            <span aria-hidden="true">WhatsApp</span>
           </a>
-          <!-- <a href="#" class="quick-contact-link" data-tel-link>
-            <span aria-hidden="true">📞</span> Call Now
-          </a> -->
+          <span class="hero-divider" aria-hidden="true"></span>
+          <span class="hero-location">[Locality], [City Name]</span>
         </div>
-
-        <ul class="trust-list" aria-label="Key highlights">
-          <li>Fully Furnished</li>
-          <li>High‑Speed Wi‑Fi</li>
-          <li>Secure Living</li>
-          <li>Prime Location</li>
-        </ul>
       </div>
 
-      <div class="hero-media reveal" style="--reveal-delay:120ms">
-        <div class="hero-image-frame">
-          <img src="assets/images/property/hero-room.jpg"
-               alt="ABC Residency — hero photo placeholder, to be replaced with a real property photo"
-               width="700" height="820" loading="eager">
+      <div class="hero-bottom reveal" style="--reveal-delay:160ms">
+        <div class="hero-note">
+          <span class="hero-note-line"></span>
+          <span>Comfortable living, made simple.</span>
         </div>
-        <div class="floating-card" role="note" aria-label="Resident rating">
-          <span class="floating-stars" aria-hidden="true">⭐</span>
-          <span class="floating-score">4.8/5</span>
-          <span class="floating-label">Resident Rating</span>
-        </div>
+        <a class="hero-scroll" href="#about" aria-label="Scroll to about section">
+          <span>Scroll to explore</span>
+          <span class="hero-scroll-arrow">↓</span>
+        </a>
       </div>
     </div>
   </section>
@@ -165,7 +158,6 @@
              alt="ABC Residency — common area photo placeholder, to be replaced with a real property photo" loading="lazy" width="640" height="760">
       </div>
       <div class="about-copy reveal" style="--reveal-delay:100ms">
-        <p class="eyebrow"><span class="tag-dot"></span>About ABC Residency</p>
         <h2>A Place Designed to Feel Like Home</h2>
         <p class="section-lede">ABC Residency provides comfortable and convenient accommodation for students and working professionals. Located in <strong>[Locality], [City Name]</strong>, the property offers a welcoming living environment with modern facilities and easy access to nearby colleges, offices, markets and transportation.</p>
 
@@ -185,7 +177,6 @@
   <section class="rooms" id="rooms">
     <div class="container">
       <div class="section-head reveal">
-        <p class="eyebrow center"><span class="tag-dot"></span>Rooms &amp; Pricing</p>
         <h2>Find the Room That Fits You</h2>
         <p class="section-lede center">Choose from comfortable and thoughtfully designed accommodation options.</p>
       </div>
@@ -198,7 +189,6 @@
   <section class="amenities" id="amenities">
     <div class="container">
       <div class="section-head reveal">
-        <p class="eyebrow center"><span class="tag-dot"></span>Amenities</p>
         <h2>Everything You Need for Comfortable Living</h2>
         <p class="section-lede center">Designed to make everyday living easier, safer and more comfortable.</p>
       </div>
@@ -211,7 +201,6 @@
   <section class="why-us" id="why-us">
     <div class="container">
       <div class="section-head reveal">
-        <p class="eyebrow center"><span class="tag-dot"></span>Why ABC Residency</p>
         <h2>Why Choose ABC Residency?</h2>
       </div>
 
@@ -254,7 +243,6 @@
   <section class="gallery" id="gallery">
     <div class="container">
       <div class="section-head reveal">
-        <p class="eyebrow center"><span class="tag-dot"></span>Gallery</p>
         <h2>Take a Look Around</h2>
         <p class="section-lede center">Explore the spaces that make ABC Residency feel like home.</p>
       </div>
@@ -287,7 +275,6 @@
   <section class="location" id="location">
     <div class="container location-grid">
       <div class="location-copy reveal">
-        <p class="eyebrow"><span class="tag-dot"></span>Location</p>
         <h2>Live Close to What Matters</h2>
         <p class="section-lede">ABC Residency is conveniently located in <strong>[Locality], [City Name]</strong>, providing easy access to educational institutions, workplaces, markets and transportation.</p>
 
@@ -314,7 +301,6 @@
   <section class="testimonials" id="testimonials">
     <div class="container">
       <div class="section-head reveal">
-        <p class="eyebrow center"><span class="tag-dot"></span>Testimonials</p>
         <h2>What Our Residents Say</h2>
         <p class="section-lede center">Placeholder testimonials — to be replaced with verified resident reviews.</p>
       </div>
@@ -327,7 +313,6 @@
   <section class="faq" id="faq">
     <div class="container faq-wrap">
       <div class="section-head reveal">
-        <p class="eyebrow center"><span class="tag-dot"></span>FAQ</p>
         <h2>Frequently Asked Questions</h2>
       </div>
 
@@ -339,7 +324,6 @@
   <section class="rules" id="rules">
     <div class="container">
       <div class="section-head reveal">
-        <p class="eyebrow center"><span class="tag-dot"></span>Rules &amp; Policies</p>
         <h2>House Rules &amp; Policies</h2>
         <p class="section-lede center">Every item below will be confirmed with property management before this site goes live — nothing here is final yet.</p>
       </div>
@@ -352,7 +336,6 @@
   <section class="contact" id="contact">
     <div class="container">
       <div class="section-head reveal">
-        <p class="eyebrow center"><span class="tag-dot"></span>Contact</p>
         <h2>Ready to Find Your New Home?</h2>
         <p class="section-lede center">Have questions or want to check room availability? Get in touch with us.</p>
       </div>
